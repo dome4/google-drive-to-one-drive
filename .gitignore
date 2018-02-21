@@ -1,3 +1,5 @@
 .project
 .pydevproject
 client_secret.json
+
+*.pyc
