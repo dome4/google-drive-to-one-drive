@@ -18,9 +18,20 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
 
+    request(service)
+    
+            
+def request(service):
+    """
+    request 10 files
+    """
     results = service.files().list(
-        pageSize=10,fields="nextPageToken, files(id, name)").execute()
+        pageSize=10, fields="nextPageToken, files(id, name)").execute()
     items = results.get('files', [])
+    
+    """
+    print results
+    """
     if not items:
         print('No files found.')
     else:
