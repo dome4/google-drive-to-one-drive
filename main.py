@@ -19,15 +19,30 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
 
-    request(service)
+    iteration = 0
+    nextPageToken = None
+    while nextPageToken != None or (iteration == 0 and nextPageToken == None):
+        print ('iteration: ' + str(iteration))
+        nextPageToken = request(service, nextPageToken)
+        iteration = iteration + 1
+        
+        """
+        ToDo remove break mark
+        """
+        if iteration == 10:
+            break
+        """
+        """
     
             
-def request(service):
+def request(service, nextPageToken):
     """
     request 10 files
     """
     results = service.files().list(
-        pageSize=100, fields="nextPageToken, files(id, name, parents, owners)").execute()
+        pageSize=10, 
+        pageToken = nextPageToken,
+        fields="nextPageToken, files(id, name, parents, owners)").execute()
     items = results.get('files', [])
     
     
@@ -47,15 +62,19 @@ def request(service):
         """
         filename = 'data.txt'
         # remove file before setting new content
+        """
         try:
             os.remove(filename)
         except OSError: 
             print ('something went wrong')
+        """
         
         with io.open(filename, 'w', encoding='utf-8') as f:
             f.write(json.dumps(items, ensure_ascii=False))
-            #f.write(unicode('page1'))
+            # f.write(unicode('{"separator":"-------------------------------------------------"}'))
             f.close()
+            
+        return results['nextPageToken']
 
 if __name__ == '__main__':
     main()
