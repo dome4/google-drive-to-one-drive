@@ -26,8 +26,9 @@ def request(service):
     request 10 files
     """
     results = service.files().list(
-        pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        pageSize=100, fields="nextPageToken, files(id, name, parents, owners)").execute()
     items = results.get('files', [])
+    
     
     """
     print results
@@ -35,9 +36,10 @@ def request(service):
     if not items:
         print('No files found.')
     else:
+        
         print('Files:')
         for item in items:
-            print('{0} ({1})'.format(item['name'], item['id']))
+            print('{0} ({1}) ({2})'.format(item['name'], item['id'], item['parents']))
 
 if __name__ == '__main__':
     main()
