@@ -82,7 +82,7 @@ def request(service, nextPageToken):
     results = service.files().list(
         pageSize=300, 
         pageToken = nextPageToken,
-        fields="nextPageToken, files(id, name, parents, owners)").execute()
+        fields="nextPageToken, files(id, name, parents, owners, mimeType)").execute()
     
     return results
     
