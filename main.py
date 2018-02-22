@@ -2,6 +2,7 @@ from __future__ import print_function
 import httplib2
 import os
 import auth
+import io, json
 
 from apiclient import discovery
 from oauth2client import client
@@ -38,8 +39,23 @@ def request(service):
     else:
         
         print('Files:')
-        for item in items:
-            print('{0} ({1}) ({2})'.format(item['name'], item['id'], item['parents']))
+        #for item in items:
+         #   print('{0} ({1}) ({2})'.format(item['name'], item['id'], item['parents']))
+        
+        """
+        save response in file
+        """
+        filename = 'data.txt'
+        # remove file before setting new content
+        try:
+            os.remove(filename)
+        except OSError: 
+            print ('something went wrong')
+        
+        with io.open(filename, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(items, ensure_ascii=False))
+            #f.write(unicode('page1'))
+            f.close()
 
 if __name__ == '__main__':
     main()
