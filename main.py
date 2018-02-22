@@ -18,63 +18,74 @@ def main():
     credentials = auth.get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
-
+    
+    """
+    ----------------------------------------------------------------------------
+    """
+    """
+    save response in file
+    """
+    filename = 'data.txt'
+    # remove file before setting new content
+    try:
+        os.remove(filename)
+    except OSError: 
+        print ('something went wrong')
+    
+    # open stream to file
+    file = io.open(filename, 'w', encoding='utf-8')
+            
+    """
+    loop through result pages and save them in the file
+    """
     iteration = 0
     nextPageToken = None
+    allFiles = []
     while nextPageToken != None or (iteration == 0 and nextPageToken == None):
         print ('iteration: ' + str(iteration))
-        nextPageToken = request(service, nextPageToken)
-        iteration = iteration + 1
         
-        """
-        ToDo remove break mark
-        """
-        if iteration == 10:
-            break
-        """
-        """
+        # send request
+        result = request(service, nextPageToken)
+        
+        # set nextPageToken
+        nextPageToken = result.get('nextPageToken')
+        
+        # set result content
+        content = result.get('files', [])
+        
+        # write content in file
+        if not content:
+            print('No files found.')
+        else:
+            allFiles = allFiles + content
+            # allFiles = allFiles + content + [{"separator":"page finished"}] 
+        
+        
+        # increment iteration flag
+        iteration = iteration + 1
+  
+    """
+    write result in file
+    """   
+    file.write(json.dumps(allFiles, ensure_ascii=False))
     
-            
+    """
+    close file strem
+    """
+    file.close()
+  
+"""
+request files
+"""          
 def request(service, nextPageToken):
-    """
-    request 10 files
-    """
+
     results = service.files().list(
-        pageSize=10, 
+        pageSize=300, 
         pageToken = nextPageToken,
         fields="nextPageToken, files(id, name, parents, owners)").execute()
-    items = results.get('files', [])
     
+    return results
     
-    """
-    print results
-    """
-    if not items:
-        print('No files found.')
-    else:
-        
-        print('Files:')
-        #for item in items:
-         #   print('{0} ({1}) ({2})'.format(item['name'], item['id'], item['parents']))
-        
-        """
-        save response in file
-        """
-        filename = 'data.txt'
-        # remove file before setting new content
-        """
-        try:
-            os.remove(filename)
-        except OSError: 
-            print ('something went wrong')
-        """
-        
-        with io.open(filename, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(items, ensure_ascii=False))
-            # f.write(unicode('{"separator":"-------------------------------------------------"}'))
-            f.close()
-            
-        return results['nextPageToken']
 
 if __name__ == '__main__':
     main()
