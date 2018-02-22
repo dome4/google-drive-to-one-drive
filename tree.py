@@ -1,14 +1,38 @@
 from anytree import NodeMixin, RenderTree, ContStyle
+import json
+import io
+
+
+def loadJSON():
+    
+    # ToDo als Parameter uebergeben
+    filename = 'data.txt'
+    
+    with io.open(filename, mode = 'r',encoding='utf-8') as data_file:    
+        data = json.load(data_file)
+        
+    
+        for file in data:
+            print file['mimeType']
+            
+        
+            """
+            ToDo fuer jedes File ein neues NodeClass-Object erstellen und in Feld speichern
+            """
+    
 
 
 """
 """
 def createTree():
+    
+    # for debugging
+    loadJSON()
 
 
     """
     Die Reihenfolge spielt eine wichtige Rolle !!!
-    Files können mehr als einen Parent haben in Google!
+    Files koennen mehr als einen Parent haben in Google!
     Beispiel-Baum
     """
     root = NodeClass('root')
