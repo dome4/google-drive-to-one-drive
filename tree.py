@@ -146,15 +146,31 @@ def handleParents(jsonFile):
         return None
     
 """
-iterate through tree and check nodes if their partens already exist
-as long as every node has its partens set
+iterate through tree and check nodes if their parents already exist
+as long as every node has its parents set
 """  
 def handleMissingParents():
     
     oneMoreIteration = False
     
+    """
+    files with parentsCreated False
+    """
+    needyNodes = []
+    
+    """
+    only get necessary files
+    """
     for file in nodeList:
+        
         if file.parentsCreated == False:
+            needyNodes.append(file)
+                
+    """
+    only iterate through necessary files
+    """  
+    while oneMoreIteration: 
+        for file in needyNodes:
             """
             request parent id and check if file already exists in array
             """
@@ -169,18 +185,16 @@ def handleMissingParents():
                 file.parentsCreated = True
                 file.parentCandidate = None
                 
+                """
+                remove file if its parents are set
+                """
+                needyNodes.remove(file)
+                
             else:
                 """
                 a parent node does not exist know
                 """
-                oneMoreIteration = True          
-         
-    """
-    if a parent node is missing iterate once more over the tree
-    """   
-    if oneMoreIteration:
-        handleMissingParents()
-
+                oneMoreIteration = True            
      
 """
 class of the tree nodes 
