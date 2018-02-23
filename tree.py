@@ -21,7 +21,11 @@ def loadJSON():
     """
     add root node to list
     """
-    nodeList.append(NodeClass(name = 'root', id = None, fileType = None, parentsCreated = True, parent = None))
+    nodeList.append(NodeClass(name = 'root',
+                              id = None, fileType = None,
+                              parentsCreated = True,
+                              parentCandidate = None,
+                              parent = None))
     
     """
     open data file
@@ -32,12 +36,12 @@ def loadJSON():
         """
         create a NodeClass-object for each file
         """
-        for file in data:
+        for jsonFile in data:
             
             """
             request parent id and check if file already exists in array
             """
-            parentID = handleParents(file) 
+            parentID = handleParents(jsonFile) 
             parentNode = searchNode(parentID)
             
             
@@ -45,30 +49,33 @@ def loadJSON():
                 """
                 file has parent and node already exists
                 """
-                nodeList.append(NodeClass(name = file['name'], 
-                                      id = file['id'],
-                                      fileType = ['mimeType'],
+                nodeList.append(NodeClass(name = jsonFile['name'], 
+                                      id = jsonFile['id'],
+                                      fileType = jsonFile['mimeType'],
                                       parentsCreated = True,
+                                      parentCandidate = None,
                                       parent = parentNode))
                    
             elif parentID and not parentNode:
                 """
                 file has parents but their nodes do not exist know
                 """ 
-                nodeList.append(NodeClass(name = file['name'], 
-                                      id = file['id'],
-                                      fileType = ['mimeType'],
+                nodeList.append(NodeClass(name = jsonFile['name'], 
+                                      id = jsonFile['id'],
+                                      fileType = jsonFile['mimeType'],
                                       parentsCreated = False,
+                                      parentCandidate = parentID,
                                       parent = None))
                 
             else:
                 """
                 file has no parents
                 """
-                nodeList.append(NodeClass(name = file['name'], 
-                                      id = file['id'],
-                                      fileType = ['mimeType'],
+                nodeList.append(NodeClass(name = jsonFile['name'], 
+                                      id = jsonFile['id'],
+                                      fileType = jsonFile['mimeType'],
                                       parentsCreated = True,
+                                      parentCandidate = None,
                                       parent = None))
                 
     """
@@ -114,7 +121,7 @@ def searchNode(searchId):
 method handles the parents of a file
 it returns only the first parent id, everything else gets safed in multipleParents-variable
 """
-def handleParents(file):
+def handleParents(jsonFile):
     
     """
     catch key error if file has no parents
@@ -123,14 +130,14 @@ def handleParents(file):
         """
         return parent if file has only one
         """
-        if len(file['parents']) == 1:
-            return file['parents'][0]
+        if len(jsonFile['parents']) == 1:
+            return jsonFile['parents'][0]
         else:
             """
             return first parent and save file to multipleParents-variable if file has more than one parent
             """
-            multipleParents.append(file)
-            return file['parents'][0] 
+            multipleParents.append(jsonFile)
+            return jsonFile['parents'][0] 
         
     except KeyError:
         """
@@ -151,8 +158,7 @@ def handleMissingParents():
             """
             request parent id and check if file already exists in array
             """
-            parentID = handleParents(file) 
-            parentNode = searchNode(parentID)
+            parentNode = searchNode(file.parentCandidate)
             
             
             if parentNode:
@@ -161,13 +167,13 @@ def handleMissingParents():
                 """
                 file.parent = parentNode
                 file.parentsCreated = True
+                file.parentCandidate = None
                 
             else:
                 """
                 a parent node does not exist know
                 """
-                oneMoreIteration = True
-            
+                oneMoreIteration = True          
          
     """
     if a parent node is missing iterate once more over the tree
@@ -180,13 +186,18 @@ def handleMissingParents():
 class of the tree nodes 
 """
 class NodeClass(NodeMixin):
-    def __init__(self, name, id=None, fileType=None, parentsCreated = False, parent=None):
+    def __init__(self, name, id=None, fileType=None, parentsCreated = False, parentCandidate = None, parent=None):
         super(NodeClass, self).__init__()
         self.name = name
         self.id = id
         self.fileType = fileType
         self.parentsCreated = parentsCreated
+        """
+        parentCandidate is set when a parent node not exists
+        """
+        self.parentCandidate = parentCandidate
         self.parent = parent
         
 if __name__ == '__main__':
     createTree()
+    
