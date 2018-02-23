@@ -65,7 +65,7 @@ def loadJSON():
                                       fileType = jsonFile['mimeType'],
                                       parentsCreated = False,
                                       parentCandidate = parentID,
-                                      parent = None))
+                                      parent = nodeList[0]))
                 
             else:
                 """
@@ -76,7 +76,7 @@ def loadJSON():
                                       fileType = jsonFile['mimeType'],
                                       parentsCreated = True,
                                       parentCandidate = None,
-                                      parent = None))
+                                      parent = nodeList[0]))
                 
     """
     DEBUG print array
@@ -104,6 +104,14 @@ def createTree():
     """
     for pre, _, node in RenderTree(nodeList[0]): #root component
         print("%s%s" % (pre, node.name))
+        
+    print ('------------------------------------------------------------')
+        
+    """
+    render nodeList
+    """
+    for node in nodeList:
+        print("name: %s | type: %s | id: %s | parent: %s" % (node.name, node.fileType, node.id, node.parent))
     
 """
 search in current node list if the file with the given id already exists
