@@ -120,10 +120,6 @@ def handleParents(file):
     catch key error if file has no parents
     """
     try:
-        
-        # debug
-        print(len(file['parents']))
-        
         """
         return parent if file has only one
         """
