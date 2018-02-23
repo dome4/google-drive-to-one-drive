@@ -168,7 +168,7 @@ def handleMissingParents():
     
     oneMoreIteration = False
     
-    for file in PreOrderIter(nodeList[0]):
+    for file in nodeList:
         if file.parentsCreated == False:
             """
             request parent id and check if file already exists in array
