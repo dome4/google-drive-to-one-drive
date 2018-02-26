@@ -3,5 +3,6 @@
 client_secret.json
 
 *.pyc
-data.txt
 *.txt
+
+pg-data/
