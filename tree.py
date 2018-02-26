@@ -187,6 +187,11 @@ def handleMissingParents():
         """
         oneMoreIteration = False
         
+        """
+        flag for comparing the last two loop results
+        """
+        nothingChangedInLastLoop = True
+        
         for file in needyNodes:
             """
             request parent id and check if file already exists in array
@@ -207,12 +212,22 @@ def handleMissingParents():
                 """
                 needyNodes.remove(file)
                 
+                """
+                set flag to false if something changed
+                """
+                nothingChangedInLastLoop = False
+                
             else:
                 """
                 a parent node does not exist know
                 """
                 oneMoreIteration = True            
      
+        """
+        break while-loop if nothing changed in the last two loops
+        """
+        if nothingChangedInLastLoop:
+            break
 """
 class of the tree nodes 
 """
