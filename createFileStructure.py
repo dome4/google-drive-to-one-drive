@@ -1,4 +1,22 @@
 import os
+from anytree import PreOrderIter
+
+"""
+create folder strucutre and download files
+"""
+def createStructure(nodeList):
+    
+    print ('starting to create the file structure')
+    
+    """
+    iterate through tree
+    """
+    for node in PreOrderIter(nodeList[0]):
+        print (node.name)
+        
+        
+    print ('file structure finished')
+
 
 def createFolder(directory):
     try:

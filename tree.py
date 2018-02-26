@@ -1,6 +1,8 @@
 from anytree import NodeMixin, RenderTree, ContStyle, PreOrderIter
 import json
 import io, os
+import createFileStructure
+from createFileStructure import createStructure
 
 """
 gloabl node list
@@ -133,6 +135,11 @@ def createTree():
     """
     for node in nodeList:
         print("name: %s | type: %s | id: %s | parent: %s" % (node.name, node.fileType, node.id, node.parent))
+        
+    """
+    create file structure
+    """
+    createStructure(nodeList)
     
 """
 search in current node list if the file with the given id already exists
