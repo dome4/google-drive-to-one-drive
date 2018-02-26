@@ -1,6 +1,6 @@
 from anytree import NodeMixin, RenderTree, ContStyle, PreOrderIter
 import json
-import io
+import io, os
 
 """
 gloabl node list
@@ -98,6 +98,27 @@ def createTree():
     check all nodes with parentsCreated = False and set their parents
     """
     handleMissingParents()
+    
+    """
+    save tree in a file
+    """
+    resultsFile = 'results.txt'
+    
+    # remove file before setting new content
+    try:
+        os.remove(resultsFile)
+    except OSError: 
+        print ('something went wrong')
+    
+    # open stream to file
+    file = io.open(resultsFile, 'w', encoding='utf-8')
+    
+    # write result in file
+    for pre, _, node in RenderTree(nodeList[0]): #root component 
+        file.write("%s%s\n" % (pre, node.name))
+    
+    # close file strem
+    file.close()
     
     """
     render tree
