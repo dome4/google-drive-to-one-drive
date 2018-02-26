@@ -33,19 +33,32 @@ def downloadFile(service, fileID, fileName, mimeType, targetPath):
                 request = service.files().export_media(fileId=fileID, mimeType='application/vnd.openxmlformats-officedocument.presentationml.presentation')
                 fileName = fileName + '.pptx'
             else:
-                print ('unhandeld format: ' + str(mimeType))
+                print ('unhandeld google format: ' + str(mimeType))
                   
     else: 
         """
-        Download other files
+        build download requests for other files
         """ 
-        request = service.files().drive_service.files().get_media(fileId=fileID)
+        request = service.files().get_media(fileId=fileID)
       
-    
-                           
+    """
+    download files
+    """                  
     print("Downloading -- {}".format(fileName))
-    
     response = request.execute()
     
-    with open(os.path.join(targetPath, fileName), "wb") as writeStream:
+    """
+    file path
+    """
+    filePath = os.path.join('./pg-data/', targetPath)
+    
+    """
+    check if necessary folder already exists
+    """
+    createFolder(filePath)
+    
+    """
+    save response in file
+    """
+    with open(os.path.join(filePath, fileName), "wb") as writeStream:
         writeStream.write(response)
