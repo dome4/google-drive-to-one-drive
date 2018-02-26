@@ -159,7 +159,10 @@ as long as every node has its parents set
 """  
 def handleMissingParents():
     
-    oneMoreIteration = False
+    """
+    flag which determines if one more loop is necessary
+    """
+    oneMoreIteration = True
     
     """
     files with parentsCreated False
@@ -178,6 +181,12 @@ def handleMissingParents():
     only iterate through necessary files
     """  
     while oneMoreIteration: 
+        
+        """
+        set flag to False
+        """
+        oneMoreIteration = False
+        
         for file in needyNodes:
             """
             request parent id and check if file already exists in array
