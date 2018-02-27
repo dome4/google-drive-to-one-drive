@@ -5,7 +5,8 @@ from anytree import PreOrderIter
 create folder strucutre and download files
 """
 def createStructure(nodeList):
-    
+
+    print ('')
     print ('starting to create the file structure')
     
     """
@@ -20,26 +21,21 @@ def createStructure(nodeList):
             continue
 
         """
-        DEBUG start
-        """   
-        print (node.name)
-
-        path = getFilePath(node)
-
-        print ('-------------')
-        print (path)
-        print ('-------------')
-
-        break
-        """
-        DEBUG end
-        """
-
-        """
         create folder if it is a folder
         """
         if node.fileType == 'application/vnd.google-apps.folder':
-            pass
+
+            """
+            get current folder path
+            """ 
+            path = getFilePath(node)
+
+            print (path)
+
+            """
+            check if folder exists and create if not
+            """
+            createFolder(path)
 
         else:
             """
@@ -92,12 +88,23 @@ def getFilePath(file):
         """
         return path
 
-def createFolder(directory):
+def createFolder(directoryPath):
+
+    """
+    create folders in root-folder data
+    """
+    filePath = os.path.join('./data/', directoryPath)
+
     try:
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        """
+        create folder if it does not exist yet
+        """
+        if not os.path.exists(filePath):
+            os.makedirs(filePath)
     except OSError:
-        print ('Error: Creating directory. ' +  directory)
+        print ('Error: Creating directory: ' +  filePath)
+
+    return filePath
         
 
 # Example
@@ -138,16 +145,11 @@ def downloadFile(service, fileID, fileName, mimeType, targetPath):
     """                  
     print("Downloading -- {}".format(fileName))
     response = request.execute()
-    
-    """
-    file path
-    """
-    filePath = os.path.join('./pg-data/', targetPath)
-    
+
     """
     check if necessary folder already exists
     """
-    createFolder(filePath)
+    filePath = createFolder(targetPath)
     
     """
     save response in file

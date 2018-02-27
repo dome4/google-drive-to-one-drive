@@ -7,4 +7,4 @@ client_secret.json
 *.pyc
 *.txt
 
-pg-data/
+data/
