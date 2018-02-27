@@ -125,16 +125,15 @@ def createTree(googleDriveService):
     """
     render tree
     """
+    print ('')
     for pre, _, node in RenderTree(nodeList[0]): #root component
         print("%s%s" % (pre, node.name))
         
-    print ('------------------------------------------------------------')
-        
     """
-    render nodeList
+    render nodeList -> only for debugging
     """
-    for node in nodeList:
-        print("name: %s | type: %s | id: %s | parent: %s" % (node.name, node.fileType, node.id, node.parent))
+    # for node in nodeList:
+    #     print("name: %s | type: %s | id: %s | parent: %s" % (node.name, node.fileType, node.id, node.parent))
         
     """
     create file structure

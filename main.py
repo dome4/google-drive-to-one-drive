@@ -11,22 +11,21 @@ from oauth2client import tools
 from oauth2client.file import Storage
 
 def main():
-    """Shows basic usage of the Google Drive API.
 
-    Creates a Google Drive API service object and outputs the names and IDs
-    for up to 10 files.
+    print ('script started')
+
+    """
+    google api code
     """
     credentials = auth.get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
     
     """
-    ----------------------------------------------------------------------------
-    """
-    """
     save response in file
     """
     filename = 'data.txt'
+
     # remove file before setting new content
     try:
         os.remove(filename)
@@ -79,6 +78,9 @@ def main():
     create tree
     """
     tree.createTree(service)
+
+    print ('')
+    print ('script finished')
   
 """
 request files
@@ -92,6 +94,8 @@ def request(service, nextPageToken):
     
     return results
     
-
+"""
+run main-method
+"""
 if __name__ == '__main__':
     main()

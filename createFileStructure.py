@@ -8,6 +8,7 @@ def createStructure(nodeList, googleDriveService):
 
     print ('')
     print ('starting to create the file structure')
+    print ('')
     
     """
     iterate through tree
@@ -56,6 +57,7 @@ def createStructure(nodeList, googleDriveService):
                         mimeType = node.fileType,
                         targetPath = path)
  
+    print ('')
     print ('file structure finished')
 
 """
