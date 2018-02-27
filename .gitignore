@@ -1,6 +1,7 @@
 .project
 .pydevproject
 client_secret.json
+.idea/
 
 *.pyc
 *.txt
