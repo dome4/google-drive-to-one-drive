@@ -30,8 +30,6 @@ def createStructure(nodeList):
             """ 
             path = getFilePath(node)
 
-            print (path)
-
             """
             check if folder exists and create if not
             """
@@ -41,11 +39,57 @@ def createStructure(nodeList):
             """
             else download file
             """
-            # ToDo 
+            path = getParentFolderPath(node)
+
+            """
+            check if folder exists and create if not
+            """
+            if path != '':
+                createFolder(path)
+                
+
+            """
+            download file to target path
+            """
+            # downloadFile(service = service,
+            #            fileID = node.id,
+             #           fileName = node.name,
+              #          mimeType = node.fileType,
+               #         targetPath = '')
             pass
  
     
     print ('file structure finished')
+
+"""
+get the path of parent folder
+"""
+def getParentFolderPath(file):
+
+    """
+    folder path resulst
+    """
+    folderPath = ''
+    
+    """
+    get file path
+    """
+    filePath = getFilePath(file)
+
+    """
+    remove file name at the end
+    """
+
+    # get length of file name
+    fileNameLength = len(file.name)
+
+    # cut off file name at then end
+    folderPath = filePath[:-(fileNameLength)]
+
+    """
+    return folder path
+    """
+    return folderPath
 
 """
 get the whole path of the current file
@@ -90,6 +134,7 @@ def getFilePath(file):
 
 def createFolder(directoryPath):
 
+    # ToDo opportunity to set other root folder
     """
     create folders in root-folder data
     """
