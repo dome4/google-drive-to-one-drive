@@ -14,8 +14,38 @@ def createStructure(nodeList):
     for node in PreOrderIter(nodeList[0]):
         print (node.name)
         
-        
+    print ('-----------------------') 
+    print (getFilePath(nodeList[1]))
+    
     print ('file structure finished')
+
+"""
+get the whole path of the current file
+"""
+def getFilePath(file):
+    path = file.name
+    parentFile = file.parent
+
+    while True:
+        """
+        concatinate path
+        """
+        path = parentFile.name + '/' + path
+
+        """
+        get next parent
+        """
+        parentFile = parentFile.parent
+
+        """
+        break loop if root node is reached
+        """
+        if parentFile.parent == None and parentFile.name == 'root':
+
+            """
+            return path if root-node is reached
+            """
+            return path
 
 
 def createFolder(directory):
