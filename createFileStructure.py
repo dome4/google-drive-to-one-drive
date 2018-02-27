@@ -4,7 +4,7 @@ from anytree import PreOrderIter
 """
 create folder strucutre and download files
 """
-def createStructure(nodeList):
+def createStructure(nodeList, googleDriveService):
 
     print ('')
     print ('starting to create the file structure')
@@ -45,20 +45,17 @@ def createStructure(nodeList):
             check if folder exists and create if not
             """
             if path != '':
-                createFolder(path)
-                
+                createFolder(path)   
 
             """
             download file to target path
             """
-            # downloadFile(service = service,
-            #            fileID = node.id,
-             #           fileName = node.name,
-              #          mimeType = node.fileType,
-               #         targetPath = '')
-            pass
+            downloadFile(service = googleDriveService,
+                        fileID = node.id,
+                        fileName = node.name,
+                        mimeType = node.fileType,
+                        targetPath = path)
  
-    
     print ('file structure finished')
 
 """

@@ -88,7 +88,7 @@ def loadJSON():
 
 """
 """
-def createTree():
+def createTree(googleDriveService):
      
     
     """
@@ -139,7 +139,7 @@ def createTree():
     """
     create file structure
     """
-    createStructure(nodeList)
+    createStructure(nodeList, googleDriveService)
     
 """
 search in current node list if the file with the given id already exists
@@ -270,8 +270,4 @@ class NodeClass(NodeMixin):
         parentCandidate is set when a parent node not exists
         """
         self.parentCandidate = parentCandidate
-        self.parent = parent
-        
-if __name__ == '__main__':
-    createTree()
-    
+        self.parent = parent    

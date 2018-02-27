@@ -3,6 +3,7 @@ import httplib2
 import os
 import auth
 import io, json
+import tree
 
 from apiclient import discovery
 from oauth2client import client
@@ -73,6 +74,11 @@ def main():
     close file strem
     """
     file.close()
+
+    """
+    create tree
+    """
+    tree.createTree(service)
   
 """
 request files
