@@ -12,19 +12,41 @@ def createStructure(nodeList):
     iterate through tree
     """
     for node in PreOrderIter(nodeList[0]):
-        node.name
+
+        """
+        go to next loop if node is root node
+        """
+        if node.name == 'root' and not node.parent:
+            continue
+
+        """
+        DEBUG start
+        """   
+        print (node.name)
+
+        path = getFilePath(node)
+
+        print ('-------------')
+        print (path)
+        print ('-------------')
+
+        break
+        """
+        DEBUG end
+        """
+
         """
         create folder if it is a folder
         """
         if node.fileType == 'application/vnd.google-apps.folder':
-            path = getFilePath(node)
+            pass
 
-            print ('-------------')
-            print (path)
-            print ('-------------')
-
-            
-        
+        else:
+            """
+            else download file
+            """
+            # ToDo 
+            pass
  
     
     print ('file structure finished')
@@ -46,7 +68,8 @@ def getFilePath(file):
             """
             concatinate path
             """
-            path = currentFile.name + '/' + path     
+            if not currentFile.name == 'root' and currentFile.parent:
+                path = currentFile.name + '/' + path     
 
             """
             break loop if root node is reached
