@@ -2,6 +2,7 @@
 .pydevproject
 client_secret.json
 .idea/
+.vscode/
 
 *.pyc
 *.txt

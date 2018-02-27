@@ -12,10 +12,20 @@ def createStructure(nodeList):
     iterate through tree
     """
     for node in PreOrderIter(nodeList[0]):
-        print (node.name)
+        node.name
+        """
+        create folder if it is a folder
+        """
+        if node.fileType == 'application/vnd.google-apps.folder':
+            path = getFilePath(node)
+
+            print ('-------------')
+            print (path)
+            print ('-------------')
+
+            
         
-    print ('-----------------------') 
-    print (getFilePath(nodeList[1]))
+ 
     
     print ('file structure finished')
 
@@ -24,29 +34,40 @@ get the whole path of the current file
 """
 def getFilePath(file):
     path = file.name
-    parentFile = file.parent
+    currentFile = None
 
-    while True:
+    if file.parent:
         """
-        concatinate path
+        check if current file has a parent file
         """
-        path = parentFile.name + '/' + path
+        currentFile = file.parent
 
-        """
-        get next parent
-        """
-        parentFile = parentFile.parent
-
-        """
-        break loop if root node is reached
-        """
-        if parentFile.parent == None and parentFile.name == 'root':
+        while True:
+            """
+            concatinate path
+            """
+            path = currentFile.name + '/' + path     
 
             """
-            return path if root-node is reached
+            break loop if root node is reached
             """
-            return path
+            if not currentFile.parent and currentFile.name == 'root':
 
+                """
+                return path if root-node is reached
+                """
+                return path
+
+            else:
+                """
+                get next parent if it exists
+                """
+                currentFile = currentFile.parent
+    else:
+        """
+        only the root file has no parents
+        """
+        return path
 
 def createFolder(directory):
     try:
