@@ -1,5 +1,6 @@
 import os
 from anytree import PreOrderIter
+import config
 
 """
 create folder strucutre and download files
@@ -133,11 +134,15 @@ def getFilePath(file):
 
 def createFolder(directoryPath):
 
-    # ToDo opportunity to set other root folder
+    """
+    get root folder from the config file
+    """
+    rootPath = os.path.join(config.DOWNLOAD_FOLDER, 'data')
+
     """
     create folders in root-folder data
     """
-    filePath = os.path.join('./data/', directoryPath)
+    filePath = os.path.join(rootPath, directoryPath)
 
     try:
         """
