@@ -177,7 +177,7 @@ def downloadFile(service, fileID, fileName, mimeType, targetPath):
                 request = service.files().export_media(fileId=fileID, mimeType='application/vnd.openxmlformats-officedocument.presentationml.presentation')
                 fileName = fileName + '.pptx'
             else:
-                print ('unhandeld google format: ' + str(mimeType))
+                print ('unhandeld google format: {1} | fileID: {2}'.format(mimeType, fileID))
                   
     else: 
         """
