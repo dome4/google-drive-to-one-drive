@@ -1,17 +1,14 @@
-from __future__ import print_function
 import httplib2
-import os
+from apiclient import discovery
+
 import auth
-import io, json
 import tree
 import downloadMetadata
 import createFileStructure
 
-from apiclient import discovery
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.file import Storage
-
+"""
+main method of the script
+"""
 def main():
 
     print ('script started')
