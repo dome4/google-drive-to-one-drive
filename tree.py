@@ -88,7 +88,7 @@ def loadJSON():
 
 """
 """
-def createTree(googleDriveService):
+def createTree():
      
     
     """
@@ -136,9 +136,9 @@ def createTree(googleDriveService):
     #     print("name: %s | type: %s | id: %s | parent: %s" % (node.name, node.fileType, node.id, node.parent))
         
     """
-    create file structure
+    return the tree
     """
-    createStructure(nodeList, googleDriveService)
+    return nodeList
     
 """
 search in current node list if the file with the given id already exists

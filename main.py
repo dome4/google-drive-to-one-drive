@@ -5,6 +5,7 @@ import auth
 import io, json
 import tree
 import downloadMetadata
+import createFileStructure
 
 from apiclient import discovery
 from oauth2client import client
@@ -30,7 +31,12 @@ def main():
     """
     create tree
     """
-    tree.createTree(service)
+    nodeList = tree.createTree()
+
+    """
+    download files
+    """
+    createFileStructure.createStructure(nodeList, service)
 
     print ('')
     print ('script finished')
