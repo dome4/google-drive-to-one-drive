@@ -156,10 +156,6 @@ def createFolder(directoryPath):
     return filePath
         
 
-# Example
-# createFolder('./data/')
-# Creates a folder in the current directory called data
-
 def downloadFile(service, fileID, fileName, mimeType, targetPath):
     
     """

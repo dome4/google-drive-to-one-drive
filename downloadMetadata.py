@@ -21,13 +21,20 @@ def downloadFileList(service):
     """
     filename = os.path.join(config.DOWNLOAD_FOLDER, config.METADATA_FILE)
 
-    # remove file before setting new content
+    """
+    remove file before setting new content
+    """
     try:
         os.remove(filename)
     except OSError: 
-        print ('something went wrong')
+        """
+        file does not exist yet
+        """
+        pass
     
-    # open stream to file
+    """
+    open stream to file
+    """
     file = io.open(filename, 'w', encoding='utf-8')
             
     """
@@ -53,8 +60,6 @@ def downloadFileList(service):
             print('No files found.')
         else:
             allFiles = allFiles + content
-            # allFiles = allFiles + content + [{"separator":"page finished"}] 
-        
         
         # increment iteration flag
         iteration = iteration + 1
