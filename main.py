@@ -5,6 +5,7 @@ import auth
 import tree
 import downloadMetadata
 import createFileStructure
+import config
 
 """
 main method of the script
@@ -23,17 +24,21 @@ def main():
     """
     download file list
     """
-    downloadMetadata.downloadFileList(service)
+    if config.DOWNLOAD_METADATA:
+        downloadMetadata.downloadFileList(service)
 
     """
     create tree
     """
-    nodeList = tree.createTree()
+    nodeList = None
+    if config.CREATE_TREE:
+        nodeList = tree.createTree()
 
     """
     download files
     """
-    createFileStructure.createStructure(nodeList, service)
+    if config.CREATE_STRUCTURE:
+        createFileStructure.createStructure(nodeList, service)
 
     print ('')
     print ('script finished')
