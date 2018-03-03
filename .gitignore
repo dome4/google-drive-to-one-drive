@@ -6,5 +6,6 @@ client_secret.json
 
 *.pyc
 *.txt
+config.py
 
 data/
