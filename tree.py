@@ -3,6 +3,7 @@ import json
 import io, os
 import createFileStructure
 from createFileStructure import createStructure
+import config
 
 """
 gloabl node list
@@ -18,7 +19,7 @@ multipleParents = []
 def loadJSON():
     
     # ToDo als Parameter uebergeben
-    filename = 'data.txt'
+    filename = os.path.join(config.DOWNLOAD_FOLDER, config.METADATA_FILE)
     
     """
     add root node to list
@@ -104,7 +105,7 @@ def createTree():
     """
     save tree in a file
     """
-    resultsFile = 'results.txt'
+    resultsFile = os.path.join(config.DOWNLOAD_FOLDER, config.TREE_FILE)
     
     # remove file before setting new content
     try:

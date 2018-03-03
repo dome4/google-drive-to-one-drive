@@ -4,6 +4,7 @@ import os
 import auth
 import io, json
 import tree
+import config
 
 from apiclient import discovery
 from oauth2client import client
@@ -18,7 +19,7 @@ def downloadFileList(service):
     """
     save response in file
     """
-    filename = 'data.txt'
+    filename = os.path.join(config.DOWNLOAD_FOLDER, config.METADATA_FILE)
 
     # remove file before setting new content
     try:
